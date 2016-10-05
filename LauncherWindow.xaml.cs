@@ -12,6 +12,8 @@ using System.Windows.Media.Animation;
 using System.Net;
 using NHotkey.Wpf;
 using System.Threading.Tasks;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Steam_Game_Launcher
 {
@@ -125,6 +127,23 @@ namespace Steam_Game_Launcher
             this.Focus();
         }
 
+        public static BitmapImage ToBitmapImage(Bitmap bitmap)
+        {
+            using (var memory = new MemoryStream())
+            {
+                bitmap.Save(memory, ImageFormat.Png);
+                memory.Position = 0;
+
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+
+                return bitmapImage;
+            }
+        }
+
         // Generates icons image and places them on the stack panel
         private void GenerateIcons()
         {
@@ -144,8 +163,7 @@ namespace Steam_Game_Launcher
                 iconSource.BeginInit();
                 if (string.IsNullOrEmpty(foundIcon) || !File.Exists(ICONS_DIR + foundIcon + ".png"))
                 {
-                    // Default icon
-                    iconSource.UriSource = new Uri(ICONS_DIR + "default.png", UriKind.Relative);
+                    iconSource.UriSource = new Uri("default.png", UriKind.Relative);                                                            
                 }
                 else
                 {

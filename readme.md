@@ -1,9 +1,10 @@
 # SteamGameLauncher
 
-SteamGameLauncher is an automated launcher for your steam games. Simply point to your steam library and let it do the rest.
+SteamGameLauncher creates a beautiful interface for your installed games. Simply point to your steam library and let it do the rest.
 
   - Customizable
   - Automatic icons download
+  - Lists only installed games!
 
 ![Not found](/Screenshots/main.png?raw=true "Launcher")
 
@@ -46,4 +47,6 @@ SteamGameLauncher uses the following NuGet packages:
 
 ### Credits
 The original wallpaper included with the application and showed in the screenshot is "Lost Aura" by filipe-ps from DeviantArt
+
+The default icon is made by Chanut is Industries from www.flaticon.com, is licensed by "Creative Commons BY 3.0".
 

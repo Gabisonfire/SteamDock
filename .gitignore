@@ -20,13 +20,13 @@ _UpgradeReport_Files/
 ###############
 # Directories #
 ###############
-bin/
-obj/
-TestResults/
 !bin/Debug/userconfig.ini
 !bin/Debug/userconfig.ini.default
 !bin/Debug/appconfig.ini
 !bin/Debug/icons
+bin/
+obj/
+TestResults/
 ###################
 # Web publish log #
 ###################
