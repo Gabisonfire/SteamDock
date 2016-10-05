@@ -31,6 +31,16 @@
 *.rar
 *.tar
 *.zip
+
+bin/Release
+bin/Debug/*
+obj/
+!bin/Debug/userconfig.ini
+!bin/Debug/userconfig.ini.default
+!bin/Debug/appconfig.ini
+!bin/Debug/background.jpg
+!bin/Debug/default.png
+
 ######################
 # Logs and databases #
 ######################
@@ -52,17 +62,6 @@ Thumbs.db
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
-# Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-build/
-bld/
-[Bb]in/
-[Oo]bj/
 
 # Visual Studo 2015 cache/options directory
 .vs/
