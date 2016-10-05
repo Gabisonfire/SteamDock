@@ -9,7 +9,7 @@ SteamGameLauncher creates a beautiful interface for your installed games. Simply
 ![Not found](/Screenshots/main.png?raw=true "Launcher")
 
 ### Installation
-Installation is really easy, just extract the archive to any directory, I suggest to use "Program Files" especially if you plan on using it on startup. You will need to have the *.NET Framework 4.5* installed. Launch SteamGameLauncher.exe.
+Installation is really easy, just extract the archive to any directory. Use a directory you have write access to write the config file. You will need to have the *.NET Framework 4.5* installed. Launch SteamGameLauncher.exe.
 
 ### First Run
 On the first run, and subsequent unless you choose otherwise), you will be prompted with this window:
