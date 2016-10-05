@@ -13,7 +13,7 @@ Installation is really easy, just extract the archive to any directory, I sugges
 ### First Run
 On the first run, and subsequent unless you choose otherwise), you will be prompted with this window:
 
-![Not found](/screenshots/settings.png?raw=true "Settings")
+![Not found](/Screenshots/settings.png?raw=true "Settings")
 
  - *Steam Libraries*: Pretty straightforward, must point to your "steamapps" folder in your library/libraries
  - You can change the *font* size, type and color for the labels under the icons
