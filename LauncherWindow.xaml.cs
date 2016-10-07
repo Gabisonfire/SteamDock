@@ -68,11 +68,13 @@ namespace Steam_Game_Launcher
             if (WindowState == WindowState.Minimized)
             {
                 WindowState = WindowState.Maximized;
+                this.Show();
                 return;
             }
             if (WindowState == WindowState.Maximized)
             {
                 WindowState = WindowState.Minimized;
+                this.Hide();
                 return;
             }
             e.Handled = true;
@@ -99,6 +101,8 @@ namespace Steam_Game_Launcher
             Loading.Show();
 
             // Set main panel margins and stack panel's size. Double.NaN sets it to auto.
+            MainDockPanel.Height = resolution.Height;
+            MainDockPanel.Width = resolution.Width;
             spMain.Width = Double.NaN;
             spMain.Height = Double.NaN;
             spMain.Margin = new Thickness(MainWindow.panelMargin[0], MainWindow.panelMargin[1], MainWindow.panelMargin[2], MainWindow.panelMargin[3]);
@@ -124,6 +128,7 @@ namespace Steam_Game_Launcher
         private void IconTray_TrayMouseDoubleClick(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Maximized;
+            this.Show();
             this.Focus();
         }
 
@@ -223,6 +228,58 @@ namespace Steam_Game_Launcher
                 sp.Children.Add(lbl);
                 spMain.Children.Add(sp);
             }
+            if (!MainWindow.hideRandomIcon)
+            {
+                MakeRandomIcon();
+            }
+        }
+
+        // Create "Random" button outside of WrapPanel
+        private void MakeRandomIcon()
+        {            
+            double iconSize = Double.Parse(io.GetSetting("Main", "icon_size"));
+            HolderImage randomIcon = new HolderImage();
+            BitmapImage randomIconSource = new BitmapImage();
+            randomIconSource.BeginInit();
+            randomIconSource.UriSource = new Uri("dice.png", UriKind.Relative);
+            randomIconSource.CacheOption = BitmapCacheOption.OnLoad;
+            randomIconSource.EndInit();
+            randomIcon.Source = randomIconSource;
+
+            // Create the events handlers
+            randomIcon.MouseEnter += (sender, eventArgs) => { Glow(randomIcon, true); };
+            randomIcon.MouseLeave += (sender, eventArgs) => { Glow(randomIcon, false); };
+            randomIcon.MouseLeftButtonDown += (sender, eventArgs) => { ButtonEffectDown(randomIcon); };
+            Random random = new Random();
+            randomIcon.MouseLeftButtonUp += (sender, eventArgs) => { LaunchGame(io.gamesList[random.Next(0,io.gamesList.Count -1)]); };           
+            randomIcon.VerticalAlignment = VerticalAlignment.Center;
+            randomIcon.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            randomIcon.Height = iconSize / 2;
+            randomIcon.Width = iconSize / 2;
+            bottomPanel.Height = iconSize;
+
+            // Create a label and stack panel
+            TextBlock lbl = new TextBlock();
+            lbl.Text = "Random";
+            lbl.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            lbl.TextAlignment = TextAlignment.Center;
+            lbl.TextTrimming = TextTrimming.CharacterEllipsis;
+            lbl.Height = Double.NaN;    // auto
+            lbl.Width = Double.NaN;     // auto
+            lbl.FontFamily = MainWindow.lblTemplate.FontFamily;
+            lbl.FontSize = MainWindow.lblTemplate.FontSize;
+            lbl.FontStyle = MainWindow.lblTemplate.FontStyle;
+            lbl.FontWeight = MainWindow.lblTemplate.FontWeight;
+            lbl.Padding = new Thickness(0, MainWindow.labelPaddingTop, 0, 0);
+            lbl.Foreground = MainWindow.lblTemplate.Foreground;
+            lbl.Effect = new System.Windows.Media.Effects.DropShadowEffect();
+            StackPanel sp = new StackPanel();
+            sp.Width = Double.NaN;
+            sp.Height = Double.NaN;
+            sp.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            sp.Children.Add(randomIcon);
+            sp.Children.Add(lbl);
+            bottomPanel.Children.Add(sp);
         }
 
         // Remove icon visually, add to hiddenlist
@@ -310,6 +367,7 @@ namespace Steam_Game_Launcher
         {
             Process.Start(game.url);
             WindowState = WindowState.Minimized;
+            Hide();
         }
 
         private void Quit()

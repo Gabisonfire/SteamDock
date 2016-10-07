@@ -10,6 +10,7 @@ using Media = System.Windows.Media;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
+using Steam.Local;
 
 namespace Steam_Game_Launcher
 {
@@ -31,14 +32,18 @@ namespace Steam_Game_Launcher
         public static bool userRequestedPage = false;           // Used to show hidden settings page when requested
         public static string shortcutKey;                       // Shortcut key
         public static string shortcutModifier;                  // Shortcut Modifier
+        public static bool hideRandomIcon = false;              // Setting to hide random icon
 
         const string SETTINGS_FILE = "userconfig.ini";
         public const string APPNAME = "SteamGameLauncher";
-        const string APPVER = "0.1 BETA";
+        const string APPVER = "0.3 BETA";
 
         public MainWindow()
         {
-            InitializeComponent();            
+            // Set the working directory to the current EXE Path
+            Environment.CurrentDirectory = Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
+            InitializeComponent();
+            
         }
 
         // First run check for config file.
@@ -53,7 +58,8 @@ namespace Steam_Game_Launcher
                 catch(Exception e)
                 {
                     System.Windows.MessageBox.Show("Unable to find the user config file and unable to rebuild it. Please download a fresh copy. (" +
-                        e.ToString() + ")", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        e.ToString() + ") ", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Environment.Exit(1);
                 }
             }
         }
@@ -65,8 +71,11 @@ namespace Steam_Game_Launcher
             fbd.Description = "Select your \"steamapps\" folder.";
             if(fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                io.steamLibrariesList.Add(fbd.SelectedPath);
-                lbSteamLibraries.Items.Add(fbd.SelectedPath);
+                io.steamLibrariesList.Add(fbd.SelectedPath + "\\");
+                lbSteamLibraries.Items.Add(fbd.SelectedPath + "\\");
+                io.manifestsList.Clear();
+                io.gamesList.Clear();
+                ParseGames();
             }
         }
 
@@ -131,10 +140,10 @@ namespace Steam_Game_Launcher
                     panelMargin[1] = double.Parse(margin[1]);
                     panelMargin[2] = double.Parse(margin[2]);
                     panelMargin[3] = double.Parse(margin[3]);
-                    tbPanelMarginTop.Text = margin[0];
-                    tbPanelMarginRight.Text = margin[1];
-                    tbPanelMarginBottom.Text = margin[2];
-                    tbPanelMarginLeft.Text = margin[3];
+                    tbPanelMarginLeft.Text = margin[0];
+                    tbPanelMarginTop.Text = margin[1];
+                    tbPanelMarginRight.Text = margin[2];
+                    tbPanelMarginBottom.Text = margin[3];                    
                 }
             }
 
@@ -154,10 +163,11 @@ namespace Steam_Game_Launcher
                     iconSpacing[1] = double.Parse(spacing[1]);
                     iconSpacing[2] = double.Parse(spacing[2]);
                     iconSpacing[3] = double.Parse(spacing[3]);
-                    tbIconSpacingTop.Text = spacing[0];
-                    tbIconSpacingRight.Text = spacing[1];
-                    tbIconSpacingBottom.Text = spacing[2];
-                    tbIconSpacingLeft.Text = spacing[3];
+                    tbIconSpacingLeft.Text = spacing[0];
+                    tbIconSpacingTop.Text = spacing[1];
+                    tbIconSpacingRight.Text = spacing[2];
+                    tbIconSpacingBottom.Text = spacing[3];
+                    
                 }
             }
 
@@ -210,6 +220,10 @@ namespace Steam_Game_Launcher
             // Hidden apps
             io.hiddenList = new List<string>(io.GetSetting("Main", "hide").Split(','));
             lbHidden.ItemsSource = io.hiddenList;
+
+            // Random button
+            cbHideRandom.IsChecked = io.GetSetting("Main", "hide_random") == "True" ? true : false;
+
         }
 
         // Write all settings to ini file (user)
@@ -235,6 +249,25 @@ namespace Steam_Game_Launcher
             io.WriteSetting("Main", "download_icons", cbDownloadIcons.IsChecked.ToString());
             io.WriteSetting("Main", "shortcut_key", tbShortcut.Text);
             io.WriteSetting("Main", "modifier", tbModifier.Text);
+            io.WriteSetting("Main", "hide_random", cbHideRandom.IsChecked.ToString());
+        }
+
+        // On text changed, update the arrays holding the informations on margins/spacing
+        private void SaveSpacingMargins(object sender, TextChangedEventArgs e)
+        {            
+            string control = ((System.Windows.Controls.TextBox)sender).Name;
+            switch (control)
+            {
+                case "tbPanelMarginLeft": panelMargin[0] = Double.Parse(tbPanelMarginLeft.Text); break;
+                case "tbPanelMarginTop": panelMargin[1] = Double.Parse(tbPanelMarginTop.Text); break;
+                case "tbPanelMarginRight": panelMargin[2] = Double.Parse(tbPanelMarginRight.Text); break;
+                case "tbPanelMarginBottom": panelMargin[3] = Double.Parse(tbPanelMarginBottom.Text); break;
+                case "tbIconSpacingLeft": iconSpacing[0] = Double.Parse(tbIconSpacingLeft.Text); break;
+                case "tbIconSpacingTop": iconSpacing[1] = Double.Parse(tbIconSpacingTop.Text); break;
+                case "tbIconSpacingRight": iconSpacing[2] = Double.Parse(tbIconSpacingRight.Text); break;
+                case "tbIconSpacingBottom": iconSpacing[3] = Double.Parse(tbIconSpacingBottom.Text); break;
+                default: return;
+            }        
         }
 
         // Populate gameList with Game objects
@@ -261,7 +294,8 @@ namespace Steam_Game_Launcher
         private void fmSettings_Initialized(object sender, EventArgs e)
         {
             Title = "Settings - SteamGameLauncher " + APPVER;
-            FirstRunCheck();     
+            FirstRunCheck();
+            io.VerifyUserSettings();     
             LoadSettings();
             ParseGames();
 
@@ -446,5 +480,59 @@ namespace Steam_Game_Launcher
                 lbSteamLibraries.Items.RemoveAt(index);
             }
         }
+
+        // Scan libraries automatically
+        private void btScanLibraries_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                foreach (string lib in Libraries.Folders)
+                {
+                    string path = Path.GetFullPath(lib);
+                    DirectoryInfo dinfo = new DirectoryInfo(path);
+                    path = UppercaseFirst(GetProperDirectoryCapitalization(dinfo));
+                    // Check if not already in the list.
+                    if (lbSteamLibraries.Items.IndexOf(path) == -1)
+                    {
+                        lbSteamLibraries.Items.Add(path);
+                        io.steamLibrariesList.Add(path);                        
+                    }
+                }
+                io.manifestsList.Clear();
+                io.gamesList.Clear();
+                ParseGames();
+            }
+            catch(Exception ex)
+            {
+                System.Windows.MessageBox.Show("Unable to scan libraries. " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                io.LogToFile(ex.ToString());
+            }
+        }
+
+        private static string GetProperDirectoryCapitalization(DirectoryInfo dirInfo)
+        {
+            DirectoryInfo parentDirInfo = dirInfo.Parent;
+            if (null == parentDirInfo)
+                return dirInfo.Name;
+            return Path.Combine(GetProperDirectoryCapitalization(parentDirInfo),
+                                parentDirInfo.GetDirectories(dirInfo.Name)[0].Name);
+        }
+
+        private static string UppercaseFirst(string s)
+        {
+            // Check for empty string.
+            if (string.IsNullOrEmpty(s))
+            {
+                return string.Empty;
+            }
+            // Return char and concat substring.
+            return char.ToUpper(s[0]) + s.Substring(1);
+        }
+
+        private void cbHideRandom_Click(object sender, RoutedEventArgs e)
+        {
+            hideRandomIcon = cbHideRandom.IsChecked.Value;
+        }
+
     }
 }

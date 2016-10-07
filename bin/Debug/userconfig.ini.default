@@ -1,7 +1,7 @@
 [Main]
-libraries=C:\Program Files (x86)\Steam\steamapps
+libraries=
 icon_size=128
-panel_margin=100,100,100,100
+panel_margin=100,10,100,10
 icon_spacing=40,40,40,40
 label_padding=10
 font=Arial,14,Bold,Normal,#FFFFFFFF,#FFFFFFFF
@@ -13,3 +13,4 @@ startup=False
 download_icons=True
 shortcut_key=Tab
 modifier=Control
+hide_random=false

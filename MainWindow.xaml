@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Settings" Height="475.682" Width="718.808" ResizeMode="NoResize" Initialized="fmSettings_Initialized" ShowInTaskbar="False" Background="#FFDADADA" WindowStartupLocation="CenterScreen" Closing="fmSettings_Closing" Icon="/Resources/icon.ico">
     <Grid RenderTransformOrigin="0.514,0.515">
-        <Button x:Name="btBrowseLibrary" Content="Add Steam library" HorizontalAlignment="Left" Margin="10,128,0,0" VerticalAlignment="Top" Width="217" Click="btBrowseLibrary_Click"/>
+        <Button x:Name="btBrowseLibrary" Content="Add Steam library" HorizontalAlignment="Left" Margin="132,128,0,0" VerticalAlignment="Top" Width="116" Click="btBrowseLibrary_Click"/>
         <ListBox x:Name="lbSteamLibraries" HorizontalAlignment="Left" Height="94" Margin="10,29,0,0" VerticalAlignment="Top" Width="344"/>
         <Button x:Name="btLauncher" Content="Launch" HorizontalAlignment="Left" Margin="372,405,0,0" VerticalAlignment="Top" Width="318" Click="btLauncher_Click"/>
         <Label x:Name="label" Content="Steam Libraries" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.239,-0.018"/>
@@ -21,15 +21,15 @@
             </StackPanel>
         </GroupBox>
         <Label x:Name="label1" Content="Panel Margins" HorizontalAlignment="Left" Margin="48,226,0,0" VerticalAlignment="Top" ToolTip="Margins all around the icon's ensemble"/>
-        <TextBox x:Name="tbPanelMarginTop" HorizontalAlignment="Left" Height="23" Margin="80,199,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31" PreviewTextInput="tbPanelMargin_PreviewTextInput" MaxLines="5" Text="0" TextAlignment="Center" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="tbPanelMarginRight" HorizontalAlignment="Left" Height="23" Margin="132,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31" PreviewTextInput="tbPanelMargin_PreviewTextInput" MaxLines="5" Text="0" TextAlignment="Center" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="tbPanelMarginLeft" HorizontalAlignment="Left" Height="23" Margin="17,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31" PreviewTextInput="tbPanelMargin_PreviewTextInput" MaxLines="5" Text="0" TextAlignment="Center" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="tbPanelMarginBottom" HorizontalAlignment="Left" Height="23" Margin="80,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31" PreviewTextInput="tbPanelMargin_PreviewTextInput" MaxLines="5" Text="0" TextAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="tbPanelMarginTop" HorizontalAlignment="Left" Height="23" Margin="80,199,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31" PreviewTextInput="tbPanelMargin_PreviewTextInput" MaxLines="5" Text="0" TextAlignment="Center" VerticalContentAlignment="Center" TextChanged="SaveSpacingMargins"/>
+        <TextBox x:Name="tbPanelMarginRight" HorizontalAlignment="Left" Height="23" Margin="132,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31" PreviewTextInput="tbPanelMargin_PreviewTextInput" MaxLines="5" Text="0" TextAlignment="Center" VerticalContentAlignment="Center" TextChanged="SaveSpacingMargins"/>
+        <TextBox x:Name="tbPanelMarginLeft" HorizontalAlignment="Left" Height="23" Margin="17,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31" PreviewTextInput="tbPanelMargin_PreviewTextInput" MaxLines="5" Text="0" TextAlignment="Center" VerticalContentAlignment="Center" TextChanged="SaveSpacingMargins"/>
+        <TextBox x:Name="tbPanelMarginBottom" HorizontalAlignment="Left" Height="23" Margin="80,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31" PreviewTextInput="tbPanelMargin_PreviewTextInput" MaxLines="5" Text="0" TextAlignment="Center" VerticalContentAlignment="Center" TextChanged="SaveSpacingMargins"/>
         <Label x:Name="label1_Copy" Content="Icons Spacing" HorizontalAlignment="Left" Margin="227,227,0,0" VerticalAlignment="Top" ToolTip="The spacing between the icons"/>
-        <TextBox x:Name="tbIconSpacingTop" HorizontalAlignment="Left" Height="23" Margin="253,199,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31" PreviewTextInput="tbPanelMargin_PreviewTextInput" MaxLines="5" Text="0" TextAlignment="Center" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="tbIconSpacingRight" HorizontalAlignment="Left" Height="23" Margin="311,231,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31" PreviewTextInput="tbPanelMargin_PreviewTextInput" MaxLines="5" Text="0" TextAlignment="Center" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="tbIconSpacingLeft" HorizontalAlignment="Left" Height="23" Margin="196,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31" PreviewTextInput="tbPanelMargin_PreviewTextInput" MaxLines="5" Text="0" TextAlignment="Center" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="tbIconSpacingBottom" HorizontalAlignment="Left" Height="23" Margin="253,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31" PreviewTextInput="tbPanelMargin_PreviewTextInput" MaxLines="5" Text="0" TextAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="tbIconSpacingTop" HorizontalAlignment="Left" Height="23" Margin="253,199,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31" PreviewTextInput="tbPanelMargin_PreviewTextInput" MaxLines="5" Text="0" TextAlignment="Center" VerticalContentAlignment="Center" TextChanged="SaveSpacingMargins"/>
+        <TextBox x:Name="tbIconSpacingRight" HorizontalAlignment="Left" Height="23" Margin="311,231,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31" PreviewTextInput="tbPanelMargin_PreviewTextInput" MaxLines="5" Text="0" TextAlignment="Center" VerticalContentAlignment="Center" TextChanged="SaveSpacingMargins"/>
+        <TextBox x:Name="tbIconSpacingLeft" HorizontalAlignment="Left" Height="23" Margin="196,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31" PreviewTextInput="tbPanelMargin_PreviewTextInput" MaxLines="5" Text="0" TextAlignment="Center" VerticalContentAlignment="Center" TextChanged="SaveSpacingMargins"/>
+        <TextBox x:Name="tbIconSpacingBottom" HorizontalAlignment="Left" Height="23" Margin="253,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="31" PreviewTextInput="tbPanelMargin_PreviewTextInput" MaxLines="5" Text="0" TextAlignment="Center" VerticalContentAlignment="Center" TextChanged="SaveSpacingMargins"/>
         <Button x:Name="btFont" Content="Change Font" HorizontalAlignment="Left" Margin="65,159,0,0" VerticalAlignment="Top" Width="90" Click="btFont_Click"/>
         <TextBox x:Name="tbBackground" HorizontalAlignment="Left" Height="23" Margin="372,173,0,0" VerticalAlignment="Top" Width="237" MaxLines="1" IsReadOnly="True" VerticalContentAlignment="Center"/>
         <Slider x:Name="slOpacity" HorizontalAlignment="Left" Margin="372,227,0,0" VerticalAlignment="Top" Width="280" Maximum="100" ValueChanged="slOpacity_ValueChanged"/>
@@ -42,11 +42,12 @@
         <Label x:Name="label4" Content="Shortcut" HorizontalAlignment="Left" Margin="529,116,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="tbModifier" HorizontalAlignment="Left" Height="23" Margin="432,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="92" IsReadOnly="True" PreviewKeyDown="tbModifier_PreviewKeyDown" TextAlignment="Center" VerticalContentAlignment="Center"/>
         <Label x:Name="label5" Content="Modifier" HorizontalAlignment="Left" Margin="372,116,0,0" VerticalAlignment="Top"/>
-        <GroupBox x:Name="groupBox1" Header="Options" HorizontalAlignment="Left" Margin="505,15,0,0" VerticalAlignment="Top" Height="71" Width="184">
+        <GroupBox x:Name="groupBox1" Header="Options" HorizontalAlignment="Left" Margin="505,15,0,0" VerticalAlignment="Top" Height="82" Width="184">
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Width="165">
                 <CheckBox x:Name="cbSkipSettings" Content="Don't show settings page" HorizontalAlignment="Left" VerticalAlignment="Top" Width="159" ToolTip="Hide this page on run"/>
                 <CheckBox x:Name="cbRunOnStartup" Content="Run when Windows starts" HorizontalAlignment="Left" VerticalAlignment="Top" Width="159" Click="cbRunOnStartup_Click"/>
                 <CheckBox x:Name="cbDownloadIcons" Content="Download missing icons" HorizontalAlignment="Left" VerticalAlignment="Top" Width="159" Click="cbDownloadIcons_Click"/>
+                <CheckBox x:Name="cbHideRandom" Content="Hide &quot;Random&quot; icon" HorizontalAlignment="Left" VerticalAlignment="Top" Width="159" Click="cbHideRandom_Click"/>
             </StackPanel>
         </GroupBox>
         <Label x:Name="label6" Content="Font Color" HorizontalAlignment="Left" Margin="161,153,0,0" VerticalAlignment="Top" Height="33" VerticalContentAlignment="Center"/>
@@ -55,6 +56,7 @@
         <Button x:Name="btAddHidden" Content="Remove Selected" HorizontalAlignment="Left" Margin="209,325,0,0" VerticalAlignment="Top" Width="145" Click="btAddHidden_Click"/>
         <Label x:Name="label8" Content="Hidden Apps" HorizontalAlignment="Left" Margin="10,297,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblName" Content="Make a selection" HorizontalAlignment="Left" Margin="209,362,0,0" VerticalAlignment="Top" Width="145" Height="63"/>
-        <Button x:Name="btRemoveLibrary" Content="Remove Selected" HorizontalAlignment="Left" Margin="235,127,0,0" VerticalAlignment="Top" Width="119" Click="btRemoveLibrary_Click"/>
+        <Button x:Name="btRemoveLibrary" Content="Remove Selected" HorizontalAlignment="Left" Margin="253,127,0,0" VerticalAlignment="Top" Width="101" Click="btRemoveLibrary_Click"/>
+        <Button x:Name="btScanLibraries" Content="Scan Libraries" HorizontalAlignment="Left" Margin="10,128,0,0" VerticalAlignment="Top" Width="117" Click="btScanLibraries_Click"/>
     </Grid>
 </Window>

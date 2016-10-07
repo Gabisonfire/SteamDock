@@ -5,6 +5,7 @@ SteamGameLauncher creates a beautiful interface for your installed games. Simply
   - Customizable
   - Automatic icons download
   - Lists only installed games!
+  - Launch a random game
 
 ![Not found](/Screenshots/main.png?raw=true "Launcher")
 
@@ -25,6 +26,7 @@ On the first run, and subsequent unless you choose otherwise), you will be promp
  - *Don't show settings page*: Check this box to skip the settings screen on startup. It will still be accessible from the context menu on the tray icon.
  - *Run when Windows starts*: Will set the registry to auto launch on startup.
  - *Download missing icons*: Will attempt to download icons from Steam's cdn.
+ - *Hide "Random" button*: Hide the random button at the bottom of the launcher.
  - *Launch Toggle*: This is the key combination to show/hide the Launcher screen.
  - *Background & Opacity*: You can set your own background and opacity here.
  - *Launch*: Fire this when you are ready! The first run may take a while depending on how many games you have since it will have to dowload the icons.
@@ -44,6 +46,7 @@ SteamGameLauncher uses the following NuGet packages:
  - HtmlAgilityPack by Simon Mourrier, Jeff Klawiter and Stephan Grell
  - MadMilkman.Ini by Mario Zorica
  - NHotkey.Wpf by Thomas Levesque
+ - Steam-Local by ObsidianMinor
 
 ### Credits
 The original wallpaper included with the application and showed in the screenshot is "Lost Aura" by filipe-ps from DeviantArt

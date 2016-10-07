@@ -5,7 +5,7 @@ using System.IO;
 using MadMilkman.Ini;
 using Microsoft.Win32;
 using System.Windows.Forms;
-
+using System.Linq;
 
 namespace Steam_Game_Launcher
 {
@@ -90,7 +90,8 @@ namespace Steam_Game_Launcher
                 if (cfgtype == configType.user)
                 {
                     config.Load(SETTINGS_FILE);
-                } else if(cfgtype == configType.application)
+                }
+                else if (cfgtype == configType.application)
                 {
                     config.Load(APPCONFIG_FILE);
                 }
@@ -99,9 +100,11 @@ namespace Steam_Game_Launcher
                 main.Keys[setting].TryParseValue(out value);
                 return value;
             }
-            catch(Exception e)
+            // Catch NullReferences for VerifyUserSettings() to handle
+            catch (NullReferenceException) { throw new NullReferenceException(); }
+            catch (Exception e)
             {
-                MessageBox.Show("Could not read setting from config file. " + setting + " " +e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Could not read setting from config file. " + setting + " " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 io.LogToFile(e.ToString());
             }
             return null;
@@ -157,6 +160,46 @@ namespace Steam_Game_Launcher
                 MessageBox.Show(e.Message, "Writing Registry Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 LogToFile(e.ToString());
             }
+        }
+
+        // Verify user settings file and rebuilds it if necessary.
+        public static void VerifyUserSettings()
+        {
+            // KeyValue list to hold the settings and their default value to append.
+            List<KeyValuePair<string, string>> settings = new List<KeyValuePair<string, string>>();
+
+            // Add settings to check here
+            settings.Add(new KeyValuePair<string, string>("libraries", ""));
+            settings.Add(new KeyValuePair<string, string>("icon_size", "128"));
+            settings.Add(new KeyValuePair<string, string>("panel_margin", "100,10,100,10"));
+            settings.Add(new KeyValuePair<string, string>("icon_spacing", "40,40,40,40"));
+            settings.Add(new KeyValuePair<string, string>("label_padding", "10"));
+            settings.Add(new KeyValuePair<string, string>("font", "Arial,14,Bold,Normal,#FFFFFFFF,#FFFFFFFF"));
+            settings.Add(new KeyValuePair<string, string>("background", ""));
+            settings.Add(new KeyValuePair<string, string>("bg_opacity", "90"));
+            settings.Add(new KeyValuePair<string, string>("hide", ""));
+            settings.Add(new KeyValuePair<string, string>("hide_settings", "False"));
+            settings.Add(new KeyValuePair<string, string>("startup", "False"));
+            settings.Add(new KeyValuePair<string, string>("download_icons", "True"));
+            settings.Add(new KeyValuePair<string, string>("shortcut_key", "Tab"));
+            settings.Add(new KeyValuePair<string, string>("modifier", "Control"));
+            settings.Add(new KeyValuePair<string, string>("hide_random", "False"));
+
+            foreach (KeyValuePair<string, string> s in settings)
+            {
+                try
+                {
+                    GetSetting("Main", s.Key);
+                }
+                catch (NullReferenceException)
+                {
+                    File.AppendAllText(SETTINGS_FILE, Environment.NewLine + s.Key + "=" + s.Value);
+                }
+            }
+
+            // Remove blank lines
+            var lines = File.ReadAllLines(SETTINGS_FILE).Where(arg => !string.IsNullOrWhiteSpace(arg));
+            File.WriteAllLines(SETTINGS_FILE, lines);
         }
 
 }

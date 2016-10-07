@@ -58,6 +58,10 @@
       <HintPath>packages\NHotkey.Wpf.1.2.1\lib\net35\NHotkey.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Steam Local Data, Version=0.4.0.246, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Steam_Local_Data.dll.0.4.1\lib\net45\Steam Local Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
