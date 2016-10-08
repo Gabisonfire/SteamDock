@@ -13,4 +13,4 @@ startup=False
 download_icons=True
 shortcut_key=Tab
 modifier=Control
-hide_random=false
+hide_random=False

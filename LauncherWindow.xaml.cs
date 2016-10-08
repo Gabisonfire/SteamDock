@@ -83,6 +83,7 @@ namespace Steam_Game_Launcher
         private void fmLauncher_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
+            Hide();
         }
 
         private void fmLauncher_Initialized(object sender, EventArgs e)
