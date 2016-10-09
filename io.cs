@@ -58,9 +58,9 @@ namespace Steam_Game_Launcher
                     string manifest = File.ReadAllText(man);
                     Regex regexName = new Regex(regexNamePattern);
                     Regex regexID = new Regex(regexIDPattern);
-                    Regex regexInstallDir = new Regex(regexInstallPattern);
+                    Regex regexInstallDir = new Regex(regexInstallPattern);                    
                     Match matchName = regexName.Match(manifest);
-                    Match matchID = regexID.Match(manifest);
+                    Match matchID = regexID.Match(manifest.ToLower()); // Setting it to lower because some steam installation use "appID" instead of "appid"
                     Match matchInstall = regexInstallDir.Match(manifest);
                     bool Visible = true;
                     if(matchName.Success && matchID.Success && matchInstall.Success)
@@ -76,10 +76,18 @@ namespace Steam_Game_Launcher
                         }
                         gamesList.Add(new Game(matchName.Value, matchID.Value, matchInstall.Value, Visible));
                     }
-                    else
+                    else if(!matchName.Success)
                     {
-                        LogToFile("One of the regex patterns did not generate any results for manifest: " + man);
-                    }                                                    
+                        LogToFile("Regex patterns did not generate any results for manifest: " + man + Environment.NewLine + regexNamePattern);
+                    }
+                    else if (!matchID.Success)
+                    {
+                        LogToFile("Regex patterns did not generate any results for manifest: " + man + Environment.NewLine + regexIDPattern);
+                    }
+                    else if (!matchInstall.Success)
+                    {
+                        LogToFile("Regex patterns did not generate any results for manifest: " + man + Environment.NewLine + regexInstallPattern);
+                    }
                 }
                 catch(Exception e)
                 {

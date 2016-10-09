@@ -169,8 +169,7 @@ namespace Steam_Game_Launcher
                     tbIconSpacingLeft.Text = spacing[0];
                     tbIconSpacingTop.Text = spacing[1];
                     tbIconSpacingRight.Text = spacing[2];
-                    tbIconSpacingBottom.Text = spacing[3];
-                    
+                    tbIconSpacingBottom.Text = spacing[3];                    
                 }
             }
 
@@ -221,10 +220,18 @@ namespace Steam_Game_Launcher
             shortcutModifier = tbModifier.Text;
 
             // Hidden apps
-            io.hiddenList = new List<string>(io.GetSetting("Main", "hide").Split(','));
+            string hidden = io.GetSetting("Main", "hide");
+            if (!string.IsNullOrWhiteSpace(hidden))
+            {
+                io.hiddenList = new List<string>(hidden.Split(','));
+            }
+            else
+            {
+                io.hiddenList = new List<string>();
+            }
             lbHidden.ItemsSource = io.hiddenList;
 
-            // Random button
+            // Random button            
             cbHideRandom.IsChecked = io.GetSetting("Main", "hide_random") == "True" ? true : false;
 
         }
