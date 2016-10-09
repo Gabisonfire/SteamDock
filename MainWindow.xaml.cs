@@ -36,7 +36,7 @@ namespace Steam_Game_Launcher
 
         const string SETTINGS_FILE = "userconfig.ini";
         public const string APPNAME = "SteamGameLauncher";
-        const string APPVER = "0.3 BETA";
+        const string APPVER = "0.4 BETA";
 
         public MainWindow()
         {

@@ -9,6 +9,8 @@ SteamGameLauncher creates a beautiful interface for your installed games. Simply
 
 ![Not found](/Screenshots/main.png?raw=true "Launcher")
 
+[Download Here](https://github.com/Gabisonfire/SteamGameLauncher/releases/latest)
+
 ### Installation
 Installation is really easy, just extract the archive to any directory. Use a directory you have write access to write the config file. You will need to have the *.NET Framework 4.5* installed. Launch SteamGameLauncher.exe.
 
