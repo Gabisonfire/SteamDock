@@ -53,7 +53,9 @@ namespace Steam_Game_Launcher
             {
                 try
                 {
+                    
                     File.Copy(SETTINGS_FILE +".default", SETTINGS_FILE);
+                    io.LogToFile("Could not find userconfig.ini, used default.");
                 }
                 catch(Exception e)
                 {
@@ -111,6 +113,7 @@ namespace Steam_Game_Launcher
                     io.steamLibrariesList.Add(s);
                 }
             }
+            Log("Loaded " + io.steamLibrariesList.Count.ToString() + " libraries.");
 
             // Icon Size
             string size = io.GetSetting("Main", "icon_size");
@@ -250,6 +253,7 @@ namespace Steam_Game_Launcher
             io.WriteSetting("Main", "shortcut_key", tbShortcut.Text);
             io.WriteSetting("Main", "modifier", tbModifier.Text);
             io.WriteSetting("Main", "hide_random", cbHideRandom.IsChecked.ToString());
+            io.LogToFile("Settings saved.");
         }
 
         // On text changed, update the arrays holding the informations on margins/spacing

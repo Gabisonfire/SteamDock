@@ -29,10 +29,17 @@ namespace Steam_Game_Launcher
         {
             foreach(string lib in steamLibrariesList)
             {
+                LogToFile("Getting manifests in " + lib);
                 if(Directory.Exists(lib))
                 {
-                    manifestsList.AddRange(Directory.GetFiles(lib, "appmanifest*.acf", SearchOption.TopDirectoryOnly));
+                    string[] man = Directory.GetFiles(lib, "appmanifest*.acf", SearchOption.TopDirectoryOnly);                   
+                    manifestsList.AddRange(man);
+                    foreach(string m in man)
+                    {
+                        LogToFile(m);
+                    }
                 }
+                LogToFile("Found " + manifestsList.Count.ToString() + ".");
             }
         }
 
@@ -47,7 +54,7 @@ namespace Steam_Game_Launcher
                     continue;                   
                 }
                 try
-                {
+                {                    
                     string manifest = File.ReadAllText(man);
                     Regex regexName = new Regex(regexNamePattern);
                     Regex regexID = new Regex(regexIDPattern);
@@ -68,7 +75,11 @@ namespace Steam_Game_Launcher
                             }
                         }
                         gamesList.Add(new Game(matchName.Value, matchID.Value, matchInstall.Value, Visible));
-                    }                                                     
+                    }
+                    else
+                    {
+                        LogToFile("One of the regex patterns did not generate any results for manifest: " + man);
+                    }                                                    
                 }
                 catch(Exception e)
                 {
@@ -131,6 +142,7 @@ namespace Steam_Game_Launcher
         // Simple method to log to text file
         public static void LogToFile(string msg)
         {
+            PurgeLog();
             msg = "[" + DateTime.Now + "] " + msg;
             try
             {
@@ -139,6 +151,18 @@ namespace Steam_Game_Launcher
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Keep log file around 5000 lines (below 1Mb)
+        private static void PurgeLog()
+        {
+            if(!File.Exists(LOG_FILE)) { return; }
+            List<string> log = File.ReadAllLines(LOG_FILE).ToList<string>();
+            if(log.Count > 5000)
+            {
+                log.RemoveRange(0, 2000);
+                File.WriteAllLines(LOG_FILE, log.ToArray());
             }
         }
 
@@ -194,6 +218,7 @@ namespace Steam_Game_Launcher
                 catch (NullReferenceException)
                 {
                     File.AppendAllText(SETTINGS_FILE, Environment.NewLine + s.Key + "=" + s.Value);
+                    LogToFile("Setting \"" + s.Key + "\" had to be rebuilt.");
                 }
             }
 

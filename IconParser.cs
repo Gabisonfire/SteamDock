@@ -3,6 +3,9 @@ using HtmlAgilityPack;
 
 namespace Steam_Game_Launcher
 {
+    /// <summary>
+    /// Class to parse the url from the SteamDB databse.
+    /// </summary>
     public class IconParser
     {
         public static readonly string STEAM_CDN = io.GetSetting("Advanced", "steam_cdn", io.configType.application);

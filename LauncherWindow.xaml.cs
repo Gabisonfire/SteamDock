@@ -39,7 +39,8 @@ namespace Steam_Game_Launcher
                 KeysConverter keyConv = new KeysConverter();
                 Key key = (Key)Enum.Parse(typeof(Key), MainWindow.shortcutKey);
                 ModifierKeys mod = (ModifierKeys)Enum.Parse(typeof(ModifierKeys), MainWindow.shortcutModifier);                
-                HotkeyManager.Current.AddOrReplace("Maximize", key, mod, Toggle);                
+                HotkeyManager.Current.AddOrReplace("Maximize", key, mod, Toggle);
+                io.LogToFile("Hotkey grabbed: " + MainWindow.shortcutModifier + " + " + MainWindow.shortcutKey);                           
             }
             catch (Exception ex)
             {
@@ -88,11 +89,12 @@ namespace Steam_Game_Launcher
 
         private void fmLauncher_Initialized(object sender, EventArgs e)
         {
-
+            io.LogToFile("Launcher initialized.");
             // Set fullscreen based on primary monitor's resolution
             System.Drawing.Rectangle resolution = Screen.PrimaryScreen.Bounds;
             Width = resolution.Width;
             Height = resolution.Height;
+            io.LogToFile("Resolution: " + Width.ToString() + "X" + Height.ToString());
 
             // Show loding screen
             LoadingScreen Loading = new LoadingScreen();
@@ -133,6 +135,7 @@ namespace Steam_Game_Launcher
             this.Focus();
         }
 
+        // Convert Bitmap to BitmapImage
         public static BitmapImage ToBitmapImage(Bitmap bitmap)
         {
             using (var memory = new MemoryStream())
@@ -159,6 +162,7 @@ namespace Steam_Game_Launcher
                    
             foreach (Game game in io.gamesList)
             {
+                io.LogToFile("Processing " + game.name);
                 // Skip hidden games.
                 if (!game.Visible) { continue; }                
                 // Try to get the icon
@@ -169,15 +173,25 @@ namespace Steam_Game_Launcher
                 iconSource.BeginInit();
                 if (string.IsNullOrEmpty(foundIcon) || !File.Exists(ICONS_DIR + foundIcon + ".png"))
                 {
-                    iconSource.UriSource = new Uri("default.png", UriKind.Relative);                                                            
+                    iconSource.UriSource = new Uri("default.png", UriKind.Relative);
+                    io.LogToFile("Using default icon.");
                 }
                 else
                 {
                     iconSource.UriSource = new Uri(ICONS_DIR + foundIcon + ".png", UriKind.Relative);
+                    io.LogToFile("Using " + iconSource.UriSource.ToString());
                 }
 
                 iconSource.CacheOption = BitmapCacheOption.OnLoad;
-                iconSource.EndInit();
+                try
+                {
+                    iconSource.EndInit();
+                }
+                catch (InvalidOperationException ex)
+                {
+                    io.LogToFile("Error processing " + game.name + ". " + ex.ToString());
+                    continue;
+                }
                 icon.Source = iconSource;
 
                 // Create the events handlers
@@ -252,7 +266,10 @@ namespace Steam_Game_Launcher
             randomIcon.MouseLeave += (sender, eventArgs) => { Glow(randomIcon, false); };
             randomIcon.MouseLeftButtonDown += (sender, eventArgs) => { ButtonEffectDown(randomIcon); };
             Random random = new Random();
-            randomIcon.MouseLeftButtonUp += (sender, eventArgs) => { LaunchGame(io.gamesList[random.Next(0,io.gamesList.Count -1)]); };           
+            if (!(io.gamesList.Count == 0))
+            {
+                randomIcon.MouseLeftButtonUp += (sender, eventArgs) => { LaunchGame(io.gamesList[random.Next(0, io.gamesList.Count - 1)]); };
+            }
             randomIcon.VerticalAlignment = VerticalAlignment.Center;
             randomIcon.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             randomIcon.Height = iconSize / 2;
@@ -354,6 +371,7 @@ namespace Steam_Game_Launcher
             try
             {
                 WebClient Client = new WebClient();
+                io.LogToFile("Downloading icon from " + iconURL);
                 Client.DownloadFile(iconURL, ICONS_DIR + game.install_dir + ".png");
                 return true;
             }

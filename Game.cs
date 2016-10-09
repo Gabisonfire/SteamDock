@@ -23,8 +23,6 @@ namespace Steam_Game_Launcher
         public int CompareTo(Game other)
         {
             return name.CompareTo(other.name);
-        }
-
-             
+        }             
     }
 }
