@@ -8,11 +8,8 @@
         mc:Ignorable="d"
         Title="Settings" Height="475.682" Width="718.808" ResizeMode="NoResize" Initialized="fmSettings_Initialized" ShowInTaskbar="False" Background="#FFDADADA" WindowStartupLocation="CenterScreen" Closing="fmSettings_Closing" Icon="/Resources/icon.ico">
     <Grid RenderTransformOrigin="0.514,0.515">
-        <Button x:Name="btBrowseLibrary" Content="Add Steam library" HorizontalAlignment="Left" Margin="132,128,0,0" VerticalAlignment="Top" Width="116" Click="btBrowseLibrary_Click"/>
-        <ListBox x:Name="lbSteamLibraries" HorizontalAlignment="Left" Height="94" Margin="10,29,0,0" VerticalAlignment="Top" Width="344"/>
         <Button x:Name="btLauncher" Content="Launch" HorizontalAlignment="Left" Margin="372,405,0,0" VerticalAlignment="Top" Width="318" Click="btLauncher_Click"/>
-        <Label x:Name="label" Content="Steam Libraries" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.239,-0.018"/>
-        <ListBox x:Name="lbLog" HorizontalAlignment="Left" Height="132" Margin="372,254,0,0" VerticalAlignment="Top" Width="318"/>
+        <ListBox x:Name="lbLog" HorizontalAlignment="Left" Height="132" Margin="17,10,0,0" VerticalAlignment="Top" Width="318"/>
         <GroupBox x:Name="groupBox" Header="Icon Size" HorizontalAlignment="Left" Margin="371,15,0,0" VerticalAlignment="Top" Height="71" Width="115">
             <StackPanel HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="102" Margin="0,0,0,2">
                 <RadioButton x:Name="rb64" Content="64px(small)"/>
@@ -56,7 +53,5 @@
         <Button x:Name="btAddHidden" Content="Remove Selected" HorizontalAlignment="Left" Margin="209,325,0,0" VerticalAlignment="Top" Width="145" Click="btAddHidden_Click"/>
         <Label x:Name="label8" Content="Hidden Apps" HorizontalAlignment="Left" Margin="10,297,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblName" Content="Make a selection" HorizontalAlignment="Left" Margin="209,362,0,0" VerticalAlignment="Top" Width="145" Height="63"/>
-        <Button x:Name="btRemoveLibrary" Content="Remove Selected" HorizontalAlignment="Left" Margin="253,127,0,0" VerticalAlignment="Top" Width="101" Click="btRemoveLibrary_Click"/>
-        <Button x:Name="btScanLibraries" Content="Scan Libraries" HorizontalAlignment="Left" Margin="10,128,0,0" VerticalAlignment="Top" Width="117" Click="btScanLibraries_Click"/>
     </Grid>
 </Window>

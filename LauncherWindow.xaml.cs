@@ -162,7 +162,7 @@ namespace Steam_Game_Launcher
                    
             foreach (Game game in io.gamesList)
             {
-                io.LogToFile("Processing " + game.name);
+                io.LogToFile("Processing " + game.Name);
                 // Skip hidden games.
                 if (!game.Visible) { continue; }                
                 // Try to get the icon
@@ -189,7 +189,7 @@ namespace Steam_Game_Launcher
                 }
                 catch (InvalidOperationException ex)
                 {
-                    io.LogToFile("Error processing " + game.name + ". " + ex.ToString());
+                    io.LogToFile("Error processing " + game.Name + ". " + ex.ToString());
                     continue;
                 }
                 icon.Source = iconSource;
@@ -216,7 +216,7 @@ namespace Steam_Game_Launcher
 
                 // Create a label and stack panel
                 TextBlock lbl = new TextBlock();
-                lbl.Text = game.name;
+                lbl.Text = game.Name;
                 lbl.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
                 lbl.TextAlignment = TextAlignment.Center;
                 lbl.TextTrimming = TextTrimming.CharacterEllipsis;
@@ -306,7 +306,7 @@ namespace Steam_Game_Launcher
             try
             {
                 StackPanel panel = (StackPanel)icon.Parent;
-                io.hiddenList.Add(icon.game.ID);
+                io.hiddenList.Add(icon.game.ID.ToString());
                 panel.Children.RemoveRange(0, panel.Children.Count);
                 WrapPanel mainPanel = (WrapPanel)panel.Parent;
                 mainPanel.Children.Remove(panel);
@@ -326,14 +326,14 @@ namespace Steam_Game_Launcher
             foreach (string f in io.iconsList)
             {
                 string file = System.IO.Path.GetFileNameWithoutExtension(f);
-                string cleanedName = game.name.Replace(":", " ").Replace("?", "");
+                string cleanedName = game.Name.Replace(":", " ").Replace("?", "");
                 // Check first with the ID
-                if (file == game.ID)
+                if (file == game.ID.ToString())
                 {
                     return file;
                 }
                 //Second check is with the installdir name (works well with single word titles)
-                else if (file == game.install_dir)
+                else if (file == game.SafeName)
                 {
                     return file;
                 }
@@ -350,9 +350,9 @@ namespace Steam_Game_Launcher
             }
 
             // Last is to download the icon from Steam
-            if (MainWindow.downloadIcons && DownloadIcon(game) && File.Exists(ICONS_DIR + game.install_dir + ".png"))
+            if (MainWindow.downloadIcons && DownloadIcon(game) && File.Exists(ICONS_DIR + game.SafeName + ".png"))
             {
-                return game.install_dir;
+                return game.SafeName;
             }
             else
             {
@@ -363,7 +363,7 @@ namespace Steam_Game_Launcher
         // Download icon after parsing url
         private bool DownloadIcon(Game game)
         {
-            string iconURL = IconParser.GetIconURL(game.ID);
+            string iconURL = IconParser.GetIconURL(game.ID.ToString());
             if (string.IsNullOrEmpty(iconURL))
             {
                 return false;
@@ -372,19 +372,20 @@ namespace Steam_Game_Launcher
             {
                 WebClient Client = new WebClient();
                 io.LogToFile("Downloading icon from " + iconURL);
-                Client.DownloadFile(iconURL, ICONS_DIR + game.install_dir + ".png");
+                Client.DownloadFile(iconURL, ICONS_DIR + game.SafeName + ".png");
                 return true;
             }
             catch (Exception e)
             {
                 io.LogToFile(e.ToString() + " GAMEID:" + game.ID);
+                io.LogToFile(game.SafeName);
                 return false;
             }
         }
 
         private void LaunchGame(Game game)
         {
-            Process.Start(game.url);
+            Process.Start(game.Exec);
             WindowState = WindowState.Minimized;
             Hide();
         }
@@ -442,7 +443,7 @@ namespace Steam_Game_Launcher
         {
             io.gamesList.Clear();
             io.manifestsList.Clear();
-            io.steamLibrariesList.Clear();
+            //io.steamLibrariesList.Clear();
             io.iconsList.Clear();
         }
 

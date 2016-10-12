@@ -18,7 +18,7 @@ namespace Steam_Game_Launcher
                 HtmlWeb web = new HtmlWeb();
                 HtmlDocument doc = web.Load(Url);
 
-                string xpath = io.GetSetting("Advanced", "xpath", Steam_Game_Launcher.io.configType.application);
+                string xpath = io.GetSetting("Advanced", "xpath", io.configType.application);
                 string iconID = doc.DocumentNode.SelectNodes(xpath)[0].InnerText;
                 if (string.IsNullOrEmpty(iconID))
                 {

@@ -10,7 +10,6 @@ using Media = System.Windows.Media;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
-using Steam.Local;
 
 namespace Steam_Game_Launcher
 {
@@ -36,14 +35,13 @@ namespace Steam_Game_Launcher
 
         const string SETTINGS_FILE = "userconfig.ini";
         public const string APPNAME = "SteamGameLauncher";
-        const string APPVER = "0.4 BETA";
+        const string APPVER = "0.5 BETA";
 
         public MainWindow()
         {
             // Set the working directory to the current EXE Path
             Environment.CurrentDirectory = Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
             InitializeComponent();
-            
         }
 
         // First run check for config file.
@@ -52,8 +50,7 @@ namespace Steam_Game_Launcher
             if (!File.Exists(SETTINGS_FILE) || string.IsNullOrEmpty(File.ReadAllText(SETTINGS_FILE)))
             {
                 try
-                {
-                    
+                {                    
                     File.Copy(SETTINGS_FILE +".default", SETTINGS_FILE);
                     io.LogToFile("Could not find userconfig.ini, used default.");
                 }
@@ -64,22 +61,7 @@ namespace Steam_Game_Launcher
                     Environment.Exit(1);
                 }
             }
-        }
-
-        // Browse for steam library folders.
-        private void btBrowseLibrary_Click(object sender, RoutedEventArgs e)
-        {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.Description = "Select your \"steamapps\" folder.";
-            if(fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                io.steamLibrariesList.Add(fbd.SelectedPath + "\\");
-                lbSteamLibraries.Items.Add(fbd.SelectedPath + "\\");
-                io.manifestsList.Clear();
-                io.gamesList.Clear();
-                ParseGames();
-            }
-        }
+        }  
 
         // Show Launcher
         private void ShowLauncher(bool saveSettings = true)
@@ -101,19 +83,6 @@ namespace Steam_Game_Launcher
 
         private void LoadSettings()
         {            
-            // Load libraries from config
-            Log("Loading steam libraries...");
-            string libs = io.GetSetting("Main", "libraries");
-            if (!string.IsNullOrEmpty(libs))
-            {
-                string[] libraries = libs.Split(',');
-                foreach (string s in libraries)
-                {
-                    lbSteamLibraries.Items.Add(s);
-                    io.steamLibrariesList.Add(s);
-                }
-            }
-            Log("Loaded " + io.steamLibrariesList.Count.ToString() + " libraries.");
 
             // Icon Size
             string size = io.GetSetting("Main", "icon_size");
@@ -239,7 +208,6 @@ namespace Steam_Game_Launcher
         // Write all settings to ini file (user)
         private void SaveSettings()
         {
-            io.WriteSetting("Main", "libraries", string.Join(",",io.steamLibrariesList.ToArray()));
             io.WriteSetting("Main", "icon_size", iconSize);
             io.WriteSetting("Main", "panel_margin", string.Join(",", panelMargin));
             io.WriteSetting("Main", "icon_spacing", string.Join(",", iconSpacing));
@@ -452,7 +420,7 @@ namespace Steam_Game_Launcher
         {
             foreach (Game game in io.gamesList)
             {
-                if(game.ID == id)
+                if(game.ID.ToString() == id)
                 {
                     game.Visible = true;
                     break;
@@ -465,9 +433,9 @@ namespace Steam_Game_Launcher
         {
             foreach(Game game in io.gamesList)
             {
-                if(game.ID == id)
+                if(game.ID.ToString() == id)
                 {
-                    return game.name;
+                    return game.Name;
                 }
             }
             return "Not found.";
@@ -479,44 +447,6 @@ namespace Steam_Game_Launcher
             if (lbHidden.SelectedIndex > -1)
             {
                 lblName.Content = GetGameName(lbHidden.SelectedItem.ToString());
-            }
-        }
-
-        private void btRemoveLibrary_Click(object sender, RoutedEventArgs e)
-        {
-            int index = lbSteamLibraries.SelectedIndex;
-            if (index > -1)
-            {
-                io.steamLibrariesList.Remove(lbSteamLibraries.Items[index].ToString());
-                lbSteamLibraries.Items.RemoveAt(index);
-            }
-        }
-
-        // Scan libraries automatically
-        private void btScanLibraries_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                foreach (string lib in Libraries.Folders)
-                {
-                    string path = Path.GetFullPath(lib);
-                    DirectoryInfo dinfo = new DirectoryInfo(path);
-                    path = UppercaseFirst(GetProperDirectoryCapitalization(dinfo));
-                    // Check if not already in the list.
-                    if (lbSteamLibraries.Items.IndexOf(path) == -1)
-                    {
-                        lbSteamLibraries.Items.Add(path);
-                        io.steamLibrariesList.Add(path);                        
-                    }
-                }
-                io.manifestsList.Clear();
-                io.gamesList.Clear();
-                ParseGames();
-            }
-            catch(Exception ex)
-            {
-                System.Windows.MessageBox.Show("Unable to scan libraries. " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                io.LogToFile(ex.ToString());
             }
         }
 
