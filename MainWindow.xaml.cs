@@ -475,5 +475,22 @@ namespace Steam_Game_Launcher
             hideRandomIcon = cbHideRandom.IsChecked.Value;
         }
 
+        private void setIconSize(object sender, RoutedEventArgs e)
+        {
+            if(rb64.IsChecked == true)
+            {
+                iconSize = "64";
+            }
+            if (rb128.IsChecked == true)
+            {
+                iconSize = "128";
+            }
+            if(rb256.IsChecked == true)
+            {
+                iconSize = "256";
+            }
+
+        }
+
     }
 }

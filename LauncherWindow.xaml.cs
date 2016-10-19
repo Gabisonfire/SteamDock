@@ -14,6 +14,7 @@ using NHotkey.Wpf;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
+using SteamKit2;
 
 namespace Steam_Game_Launcher
 {
@@ -322,7 +323,7 @@ namespace Steam_Game_Launcher
 
         // Find the best matching item using the game information.
         private string FindIcon(Game game)
-        {
+        {            
             foreach (string f in io.iconsList)
             {
                 string file = System.IO.Path.GetFileNameWithoutExtension(f);
