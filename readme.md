@@ -1,15 +1,16 @@
 # SteamGameLauncher
 
-SteamGameLauncher creates a beautiful interface for your installed games. Simply point to your steam library and let it do the rest.
+SteamGameLauncher creates a launch pad for your installed games.
 
   - Customizable
   - Automatic icons download
   - Lists only installed games!
   - Launch a random game
 
+[Download Here](https://github.com/Gabisonfire/SteamGameLauncher/releases/latest)  
+  
 ![Not found](/Screenshots/main.png?raw=true "Launcher")
-
-[Download Here](https://github.com/Gabisonfire/SteamGameLauncher/releases/latest)
+![Not found](/Screenshots/main2.png?raw=true "Launcher")
 
 ### Installation
 Installation is really easy, just extract the archive to any directory. Use a directory you have write access to write the config file. You will need to have the *.NET Framework 4.5* installed. Launch SteamGameLauncher.exe.
@@ -19,7 +20,6 @@ On the first run, and subsequent unless you choose otherwise), you will be promp
 
 ![Not found](/Screenshots/settings.png?raw=true "Settings")
 
- - *Steam Libraries*: Pretty straightforward, must point to your "steamapps" folder in your library/libraries
  - You can change the *font* size, type and color for the labels under the icons
  - *Panel Margins*: Sets the margins between the icons panel and the end of the screen
  - *Icons Spacing*: Spacing between each icons
@@ -51,7 +51,7 @@ SteamGameLauncher uses the following NuGet packages:
  - Steam-Local by ObsidianMinor
 
 ### Credits
-The original wallpaper included with the application and showed in the screenshot is "Lost Aura" by filipe-ps from DeviantArt
+The original wallpapers included with the application and showed in the screenshots are "Lost Aura" by filipe-ps and "Linear Retro" by MindWav3 from DeviantArt
 
 The default icon is made by Chanut is Industries from www.flaticon.com, is licensed by "Creative Commons BY 3.0".
 
