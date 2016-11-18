@@ -10,7 +10,7 @@ SteamGameLauncher creates a launch pad for your installed games.
 [Download Here](https://github.com/Gabisonfire/SteamGameLauncher/releases/latest)  
   
 ![Not found](/Screenshots/main.png?raw=true "Launcher")
-![Not found](/Screenshots/main2.png?raw=true "Launcher")
+![Not found](/Screenshots/main_t.png?raw=true "Launcher")
 
 ### Installation
 Installation is really easy, just extract the archive to any directory. Use a directory you have write access to write the config file. You will need to have the *.NET Framework 4.5* installed. Launch SteamGameLauncher.exe.
