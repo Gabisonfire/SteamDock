@@ -34,7 +34,7 @@ namespace Steam_Dock
         public static bool hideRandomIcon = false;              // Setting to hide random icon
 
         const string SETTINGS_FILE = "userconfig.ini";
-        public const string APPNAME = "SteamGameLauncher";
+        public const string APPNAME = "SteamDock";
         const string APPVER = "1.0";
 
         public MainWindow()
@@ -272,7 +272,7 @@ namespace Steam_Dock
         // Start the building process once the form is initialized
         private void fmSettings_Initialized(object sender, EventArgs e)
         {
-            Title = "Settings - SteamGameLauncher " + APPVER;
+            Title = "Settings - " + APPNAME + " " + APPVER;
             FirstRunCheck();
             io.VerifyUserSettings();     
             LoadSettings();
