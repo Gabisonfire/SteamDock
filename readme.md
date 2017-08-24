@@ -1,19 +1,19 @@
-# SteamGameLauncher
+# SteamDock
 
-SteamGameLauncher creates a launch pad for your installed games.
+SteamDock creates a launch pad for your installed games.
 
   - Customizable
   - Automatic icons download
   - Lists only installed games!
   - Launch a random game
 
-[Download Here](https://github.com/Gabisonfire/SteamGameLauncher/releases/latest)  
+[Download Here](https://github.com/Gabisonfire/SteamDock/releases/latest)  
   
 ![Not found](/Screenshots/main.png?raw=true "Launcher")
 ![Not found](/Screenshots/main_t.png?raw=true "Launcher")
 
 ### Installation
-Installation is really easy, just extract the archive to any directory. Use a directory you have write access to write the config file. You will need to have the *.NET Framework 4.5* installed. Launch SteamGameLauncher.exe.
+Installation is really easy, just extract the archive to any directory. Use a directory you have write access to write the config file. You will need to have the *.NET Framework 4.5* installed. Launch SteamDockLauncher.exe.
 
 ### First Run
 On the first run, and subsequent unless you choose otherwise), you will be prompted with this window:
@@ -42,7 +42,7 @@ Some of the downloaded icons are at a pretty low resolution due to the icon avai
 
 Feel free to contribute to this project if you like it or if you have any suggestions, drop a pull request and i'll be happy to take a look.
 
-SteamGameLauncher uses the following NuGet packages:
+SteamDock uses the following NuGet packages:
  - Extended.Wpf.Toolkit by Xceed
  - Hardcodet.NotifyIcon.Wpf by Philipp Sumi
  - HtmlAgilityPack by Simon Mourrier, Jeff Klawiter and Stephan Grell
