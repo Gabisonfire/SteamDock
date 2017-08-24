@@ -33,7 +33,7 @@
 *.zip
 
 bin/Release
-bin/Debug/*
+bin/Debug
 obj/
 !bin/Debug/userconfig.ini
 !bin/Debug/userconfig.ini.default
