@@ -1,7 +1,7 @@
 ﻿using System;
 using HtmlAgilityPack;
 
-namespace Steam_Game_Launcher
+namespace Steam_Dock
 {
     /// <summary>
     /// Class to parse the url from the SteamDB databse.

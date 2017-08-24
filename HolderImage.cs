@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Steam_Game_Launcher
+namespace Steam_Dock
 {
     // Extending Image class to be able to hold a "Game" object
     class HolderImage : Image

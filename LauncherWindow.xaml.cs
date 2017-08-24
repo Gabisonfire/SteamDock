@@ -16,7 +16,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using SteamKit2;
 
-namespace Steam_Game_Launcher
+namespace Steam_Dock
 {
     /// <summary>
     /// Interaction logic for LauncherWindow.xaml

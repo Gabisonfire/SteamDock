@@ -6,7 +6,7 @@ using Microsoft.Win32;
 using System.Windows.Forms;
 using System.Linq;
 
-namespace Steam_Game_Launcher
+namespace Steam_Dock
 {
     class io
     {

@@ -1,9 +1,9 @@
-﻿<Window x:Name="fmLoading" x:Class="Steam_Game_Launcher.LoadingScreen"
+﻿<Window x:Name="fmLoading" x:Class="Steam_Dock.LoadingScreen"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Steam_Game_Launcher"
+        xmlns:local="clr-namespace:Steam_Dock"
         mc:Ignorable="d"
         Title="LoadingScreen" Height="300" Width="300" Visibility="Visible" WindowStyle="None" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Background="Transparent" AllowsTransparency="True">
     <Grid>

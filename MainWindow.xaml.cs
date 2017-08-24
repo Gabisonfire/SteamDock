@@ -11,7 +11,7 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 
-namespace Steam_Game_Launcher
+namespace Steam_Dock
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

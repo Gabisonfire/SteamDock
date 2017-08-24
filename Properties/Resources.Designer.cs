@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Steam_Game_Launcher.Properties {
+namespace Steam_Dock.Properties {
     using System;
     
     

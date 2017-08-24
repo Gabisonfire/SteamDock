@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Steam_Game_Launcher
+namespace Steam_Dock
 {
     /// <summary>
     /// Interaction logic for LoadingScreen.xaml

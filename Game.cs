@@ -2,7 +2,7 @@
 using Steam.Local;
 using System.IO;
 
-namespace Steam_Game_Launcher
+namespace Steam_Dock
 {
     class Game : LocalApp, IComparable<Game>
     {

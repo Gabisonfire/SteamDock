@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Steam_Game_Launcher
+namespace Steam_Dock
 {
     /// <summary>
     /// Interaction logic for App.xaml
