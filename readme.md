@@ -13,7 +13,7 @@ SteamDock creates a launch pad for your installed games.
 ![Not found](/Screenshots/main_t.png?raw=true "Launcher")
 
 ### Installation
-Installation is really easy, just extract the archive to any directory. Use a directory you have write access to write the config file. You will need to have the *.NET Framework 4.5* installed. Launch SteamDockLauncher.exe.
+Installation is really easy, just extract the archive to any directory. Use a directory you have write access to write the config file. You will need to have the *.NET Framework 4.5* installed. Launch SteamDock.exe.
 
 ### First Run
 On the first run, and subsequent unless you choose otherwise), you will be prompted with this window:
