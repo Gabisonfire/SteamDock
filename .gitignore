@@ -33,13 +33,14 @@
 *.zip
 
 bin/Release
-bin/Debug
+bin/Debug/*
 obj/
 !bin/Debug/userconfig.ini
 !bin/Debug/userconfig.ini.default
 !bin/Debug/appconfig.ini
 !bin/Debug/background.jpg
 !bin/Debug/default.png
+!bin/Debug/dice.png
 
 ######################
 # Logs and databases #
