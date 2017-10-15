@@ -11,6 +11,15 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 
+
+/*
+ * 
+ * HKEY_LOCAL_MACHINE\SOFTWARE\Ubisoft\Launcher\Installs\635\InstallDir
+ * 
+ * 
+ * 
+ */
+
 namespace Steam_Dock
 {
     /// <summary>
@@ -200,8 +209,9 @@ namespace Steam_Dock
             }
             lbHidden.ItemsSource = io.hiddenList;
 
-            // Random button            
-            cbHideRandom.IsChecked = io.GetSetting("Main", "hide_random") == "True" ? true : false;
+            // Random button        
+            hideRandomIcon = io.GetSetting("Main", "hide_random") == "True" ? true : false;
+            cbHideRandom.IsChecked = hideRandomIcon;
 
         }
 
@@ -472,7 +482,7 @@ namespace Steam_Dock
 
         private void cbHideRandom_Click(object sender, RoutedEventArgs e)
         {
-            hideRandomIcon = cbHideRandom.IsChecked.Value;
+            hideRandomIcon = cbHideRandom.IsChecked.Value;            
         }
 
         private void setIconSize(object sender, RoutedEventArgs e)
